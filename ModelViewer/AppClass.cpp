@@ -14,9 +14,16 @@ void AppClass::InitVariables(void)
 
 	m_sSelectedObject = "";
 
+	m_pMeshMngr->LoadModel("Ballin\\ball.obj", "Ball");
+	m_pMeshMngr->LoadModel("Ballin\\plane.obj", "Plane");
+
 	m_selection = std::pair<int, int>(-1, -1);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	matrix4 m4Position = glm::translate(vector3(0.0f, 1.0f, 0.0f));
+	m_pMeshMngr->SetModelMatrix(m4Position, "Ball");
+
+	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
 }
 
 void AppClass::Update(void)
@@ -39,7 +46,7 @@ void AppClass::Update(void)
 	}
 
 	//Adds all loaded instance to the render list
-	m_pMeshMngr->AddInstanceToRenderList(m_sSelectedObject);
+	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
