@@ -10,7 +10,7 @@ void AppClass::InitWindow(String a_sWindowName)
 }
 void AppClass::InitVariables(void)
 {
-	m_pCameraMngr->SetPosition(REAXISZ * 15.0f);
+	m_pCameraMngr->SetPosition(vector3(0.f,10.f,10.f));
 
 	m_sSelectedObject = "";
 
@@ -21,9 +21,14 @@ void AppClass::InitVariables(void)
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	matrix4 m4Position = glm::translate(vector3(0.0f, 1.0f, 0.0f));
-	m_pMeshMngr->SetModelMatrix(m4Position, "Ball");
+	m_v3Rotation = vector3(0.f);
+	m_m4Rotation = IDENTITY_M4;
 
+	m_pMeshMngr->SetModelMatrix(m4Position, "Ball");
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
+
+	ROT = 0.01f;
+	MAX_TURN = 0.45f;
 }
 
 void AppClass::Update(void)
@@ -40,10 +45,10 @@ void AppClass::Update(void)
 
 	ArcBall();
 
-	if (m_sSelectedObject != "")
-	{
-		m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qOrientation * m_qArcBall), m_sSelectedObject);
-	}
+	//if (m_sSelectedObject != "")
+	//{
+	//	m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qOrientation * m_qArcBall), m_sSelectedObject);
+	//}
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
@@ -51,26 +56,33 @@ void AppClass::Update(void)
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 
-	//Print info on the screen
-	m_pMeshMngr->PrintLine("");//Add a line on top
-	m_pMeshMngr->PrintLine(m_pSystem->GetAppName());
-	m_pMeshMngr->Print("Model: ");
-	m_pMeshMngr->PrintLine(m_sSelectedObject, REGREEN);
-	m_pMeshMngr->Print("Selection: ");
-	m_pMeshMngr->PrintLine(m_pMeshMngr->GetInstanceGroupName(m_selection.first, m_selection.second), REYELLOW);
-	m_pMeshMngr->Print("State: ");
-	if (m_sSelectedObject != "")
-	{
-		InstanceClass* pInstance = m_pMeshMngr->GetInstanceByName(m_sSelectedObject);
-		int nState = pInstance->GetCurrentState();
-		m_pMeshMngr->PrintLine(std::to_string(nState), REGREEN);
-	}
-	else
-	{
-		m_pMeshMngr->PrintLine("", REGREEN);
-	}
-	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	quaternion qRotation = glm::quat(m_v3Rotation);
+
+	m_m4Rotation = ToMatrix4(qRotation);
+
+	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Ball");
+	m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
+
+	////Print info on the screen
+	//m_pMeshMngr->PrintLine("");//Add a line on top
+	//m_pMeshMngr->PrintLine(m_pSystem->GetAppName());
+	//m_pMeshMngr->Print("Model: ");
+	//m_pMeshMngr->PrintLine(m_sSelectedObject, REGREEN);
+	//m_pMeshMngr->Print("Selection: ");
+	//m_pMeshMngr->PrintLine(m_pMeshMngr->GetInstanceGroupName(m_selection.first, m_selection.second), REYELLOW);
+	//m_pMeshMngr->Print("State: ");
+	//if (m_sSelectedObject != "")
+	//{
+	//	InstanceClass* pInstance = m_pMeshMngr->GetInstanceByName(m_sSelectedObject);
+	//	int nState = pInstance->GetCurrentState();
+	//	m_pMeshMngr->PrintLine(std::to_string(nState), REGREEN);
+	//}
+	//else
+	//{
+	//	m_pMeshMngr->PrintLine("", REGREEN);
+	//}
+	//m_pMeshMngr->Print("FPS:");
+	//m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 }
 
 void AppClass::Display(void)

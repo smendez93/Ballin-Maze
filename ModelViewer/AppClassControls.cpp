@@ -8,8 +8,8 @@ void AppClass::ProcessKeyboard(void)
 
 #pragma region ON PRESS/RELEASE DEFINITION
 	static bool	bLastF1 = false, bLastF2 = false, bLastF3 = false, bLastF4 = false, bLastF5 = false,
-				bLastF6 = false, bLastF7 = false, bLastF8 = false, bLastF9 = false, bLastF10 = false,
-				bLastEscape = false, bLastF = false;
+		bLastF6 = false, bLastF7 = false, bLastF8 = false, bLastF9 = false, bLastF10 = false,
+		bLastEscape = false, bLastF = false;
 #define ON_KEY_PRESS_RELEASE(key, pressed_action, released_action){  \
 			bool pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::key);			\
 			if(pressed){											\
@@ -19,7 +19,7 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Modifiers
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 		bModifier = true;
 #pragma endregion
 
@@ -51,7 +51,26 @@ void AppClass::ProcessKeyboard(void)
 		else
 			m_qOrientation = m_qOrientation * quaternion(vector3(0.0f, 0.0f, glm::radians(-1.0f)));
 	}
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		if (m_v3Rotation.x >= -1 * MAX_TURN)
+			m_v3Rotation.x -= ROT;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		if (m_v3Rotation.x <= MAX_TURN)
+			m_v3Rotation.x += ROT;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+ 		if (m_v3Rotation.z <= MAX_TURN)
+			m_v3Rotation.z += ROT;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		if (m_v3Rotation.z >= -1 * MAX_TURN)
+			m_v3Rotation.z -= ROT;
+	}
 	//Model States
 #pragma region Model States
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
@@ -145,7 +164,7 @@ void AppClass::ProcessKeyboard(void)
 			String sExtension = FileReaderClass::GetExtension(sFileName);
 			if (sFileName != "")
 			{
-				if(sExtension == "bto")
+				if (sExtension == "bto")
 					m_pMeshMngr->SaveModel(sFileName, BTO, m_sSelectedObject, true);
 				else
 					m_pMeshMngr->SaveModel(sFileName, ATO, m_sSelectedObject, true);
@@ -162,7 +181,7 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Camera Positioning
-	if(bModifier)
+	if (bModifier)
 		fSpeed *= 10.0f;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		m_pCameraMngr->MoveForward(fSpeed);
@@ -210,30 +229,30 @@ void AppClass::ProcessMouse(void)
 #pragma endregion
 	bool bLeft = false;
 	ON_MOUSE_PRESS_RELEASE(Left, NULL, bLeft = true)
-	if (bLeft)
-	{
-		//Turn off the visibility of all BOs for all instances
-		m_pMeshMngr->SetVisibleBO(BD_NONE, "ALL", -1);
-		//Get the Position and direction of the click on the screen
-		std::pair<vector3, vector3> pair =
-			m_pCameraMngr->GetClickAndDirectionOnWorldSpace(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
-		float fDistance = 0;//Stores the distance to the first colliding object
-		m_selection = m_pMeshMngr->IsColliding(pair.first, pair.second, fDistance);
-
-		//If there is a collision
-		if (m_selection.first >= 0)
+		if (bLeft)
 		{
-			//Turn on the BO of the group
-			m_pMeshMngr->SetVisibleBO(BD_OB, m_selection.first, m_selection.second);
+			//Turn off the visibility of all BOs for all instances
+			m_pMeshMngr->SetVisibleBO(BD_NONE, "ALL", -1);
+			//Get the Position and direction of the click on the screen
+			std::pair<vector3, vector3> pair =
+				m_pCameraMngr->GetClickAndDirectionOnWorldSpace(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+			float fDistance = 0;//Stores the distance to the first colliding object
+			m_selection = m_pMeshMngr->IsColliding(pair.first, pair.second, fDistance);
 
-			//Turn of the BO of the instance but not the group
-			m_pMeshMngr->SetVisibleBO(BD_NONE, m_selection.first, -2);
+			//If there is a collision
+			if (m_selection.first >= 0)
+			{
+				//Turn on the BO of the group
+				m_pMeshMngr->SetVisibleBO(BD_OB, m_selection.first, m_selection.second);
+
+				//Turn of the BO of the instance but not the group
+				m_pMeshMngr->SetVisibleBO(BD_NONE, m_selection.first, -2);
+			}
 		}
-	}
-	
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle))
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle))
 		m_bArcBall = true;
-	
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Right))
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right))
 		m_bFPC = true;
 }

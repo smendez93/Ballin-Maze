@@ -17,6 +17,11 @@ class AppClass : public ReEngAppClass
 	String m_sSelectedObject = "";
 public:
 	typedef ReEngAppClass super;
+	
+	vector3 m_v3Rotation;
+	matrix4 m_m4Rotation;
+	float ROT;
+	float MAX_TURN;
 	/*
 	USAGE: Constructor
 	ARGUMENTS:
