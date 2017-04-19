@@ -20,7 +20,7 @@ void AppClass::InitVariables(void)
 	m_selection = std::pair<int, int>(-1, -1);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	matrix4 m4Position = glm::translate(vector3(0.0f, 1.0f, 0.0f));
+	matrix4 m4Position = glm::scale(vector3(.1f))* glm::translate(vector3(0.0f, 1.0f, 0.0f));
 	m_v3Rotation = vector3(0.f);
 	m_m4Rotation = IDENTITY_M4;
 
@@ -59,10 +59,21 @@ void AppClass::Update(void)
 	quaternion qRotation = glm::quat(m_v3Rotation);
 
 	m_m4Rotation = ToMatrix4(qRotation);
-
 	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Ball");
-	m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
+	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
+	vector4 camPos = (m_m4Rotation*vector4(0, 8, 0, 1));
+	static vector3 lightStart = vector3(4,4,4);
+	vector4 lightPos = (m_m4Rotation*vector4(lightStart, 1.f));
+	m_pCameraMngr->SetPositionTargetAndView(vector3(camPos.x, camPos.y, camPos.z),vector3(0),-REAXISZ);
+	
+	m_pLightMngr->SetPosition(vector3(lightPos.x, lightPos.y, lightPos.z));
 
+	static vector3 velocity(0);
+	vector4 grav(glm::normalize(-m_pCameraMngr->GetPosition()),1);
+	grav = m_m4Rotation*grav;
+	velocity += vector3(grav.x*.01f,0, grav.z*.01f);
+	m_pMeshMngr->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Ball")*glm::translate(velocity),"Ball");
+	
 	////Print info on the screen
 	//m_pMeshMngr->PrintLine("");//Add a line on top
 	//m_pMeshMngr->PrintLine(m_pSystem->GetAppName());
@@ -90,7 +101,8 @@ void AppClass::Display(void)
 	//clear the screen
 	ClearScreen();
 	//Render the grid based on the camera's mode:
-	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
+	//m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
+
 	m_pMeshMngr->Render(); //renders the render list
 	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
