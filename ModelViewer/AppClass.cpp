@@ -11,7 +11,7 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	m_pCameraMngr->SetPosition(vector3(0.f, 10.f, 10.f));
-
+	m_pBOManager = MyBOManager::GetInstance();
 	m_sSelectedObject = "";
 
 	m_pMeshMngr->LoadModel("Planets\\03_Earth.obj", "Ball");
@@ -20,6 +20,12 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "DownWall");
 	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "LeftWall");
 	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "RightWall");
+
+	m_pBOManager->AddObject("Ball");
+	m_pBOManager->AddObject("UpWall");
+	m_pBOManager->AddObject("DownWall");
+	m_pBOManager->AddObject("LeftWall");
+	m_pBOManager->AddObject("RightWall");
 
 	m_selection = std::pair<int, int>(-1, -1);
 
@@ -43,7 +49,6 @@ void AppClass::InitVariables(void)
 	wallPosition = glm::rotate(IDENTITY_M4, 270.f, REAXISY)*wallDist;
 	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "RightWall");
 
-	m_v3Roll = vector3(0.f);
 	ROT = 0.03f;
 	MAX_TURN = 0.45f;
 	RECOIL = .2f;
@@ -98,6 +103,7 @@ void AppClass::Update(void)
 	m4_ballTranslate *= glm::translate(velocity);
 	m_pMeshMngr->SetModelMatrix(m4_ballTranslate,"Ball");
 	
+
 	////Print info on the screen
 	//m_pMeshMngr->PrintLine("");//Add a line on top
 	//m_pMeshMngr->PrintLine(m_pSystem->GetAppName());

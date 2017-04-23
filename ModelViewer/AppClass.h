@@ -7,6 +7,7 @@ Date: 2015/09
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
+#include "MyBOManager.h"
 //#include <chrono>
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
@@ -19,6 +20,8 @@ class AppClass : public ReEngAppClass
 public:
 	typedef ReEngAppClass super;
 	
+	MyBOManager* m_pBOManager;
+
 	vector3 m_v3Rotation;
 	matrix4 m_m4Rotation;
 	float ROT;
