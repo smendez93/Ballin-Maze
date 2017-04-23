@@ -15,6 +15,7 @@ class AppClass : public ReEngAppClass
 {
 	quaternion m_qOrientation;
 	String m_sSelectedObject = "";
+	
 public:
 	typedef ReEngAppClass super;
 	
@@ -22,6 +23,8 @@ public:
 	matrix4 m_m4Rotation;
 	float ROT;
 	float MAX_TURN;
+	float RECOIL;
+	float GRAV_STRENGTH;
 	/*
 	USAGE: Constructor
 	ARGUMENTS:

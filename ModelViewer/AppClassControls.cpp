@@ -53,23 +53,31 @@ void AppClass::ProcessKeyboard(void)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		if (m_v3Rotation.x >= -1 * MAX_TURN)
-			m_v3Rotation.x -= ROT;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
 		if (m_v3Rotation.x <= MAX_TURN)
 			m_v3Rotation.x += ROT;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
- 		if (m_v3Rotation.z <= MAX_TURN)
-			m_v3Rotation.z += ROT;
+		if (m_v3Rotation.x >= -1 * MAX_TURN)
+			m_v3Rotation.x -= ROT;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	else
+	{
+		m_v3Rotation.x *= (1-RECOIL);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		if (m_v3Rotation.z >= -1 * MAX_TURN)
 			m_v3Rotation.z -= ROT;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		if (m_v3Rotation.z <= MAX_TURN)
+			m_v3Rotation.z += ROT;
+	}
+	else
+	{
+		m_v3Rotation.z *= (1-RECOIL);
 	}
 	//Model States
 #pragma region Model States
