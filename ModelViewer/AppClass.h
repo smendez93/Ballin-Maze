@@ -8,6 +8,9 @@ Date: 2015/09
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "MyBOManager.h"
+#include "MapReader.h"
+#include <iostream>
+#include <fstream>
 //#include <chrono>
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
@@ -21,6 +24,8 @@ public:
 	typedef ReEngAppClass super;
 	
 	MyBOManager* m_pBOManager;
+
+	MapReader* m_pMapReader;
 
 	vector3 m_v3Rotation;
 	matrix4 m_m4Rotation;
@@ -102,6 +107,7 @@ public:
 	OUTPUT: ---
 	*/
 	virtual void Release(void) final;
+
 };
 
 #endif //__APPLICATION_H_

@@ -18,6 +18,7 @@ void MyBOClass::Init(void)
 	m_fRadius = 0.0f;
 
 	m_pMeshMngr = MeshManagerSingleton::GetInstance();
+
 }
 void MyBOClass::Swap(MyBOClass& other)
 {
@@ -195,6 +196,15 @@ void MyBOClass::DisplayReAlligned(vector3 a_v3Color)
 {
 	m_pMeshMngr->AddCubeToRenderList(glm::translate(IDENTITY_M4, m_v3CenterG) *
 		glm::scale(m_v3HalfWidthG * 2.0f), a_v3Color, WIRE);
+}
+//reads a text file and generates walls on the map accordingly
+void MyBOClass::ReadMap(char*)
+{
+	//start separating the plane into small boxes: rows and columns based on the dimensions
+
+	//for each sectional piece based on the dimension, have a specific place in space for it
+
+	//depending on the text file piece, draw the wall according to a section on that sectional piece
 }
 bool MyBOClass::IsColliding(MyBOClass* const a_pOther)
 {

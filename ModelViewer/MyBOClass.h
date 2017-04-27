@@ -27,6 +27,7 @@ class MyBOClass
 	vector3 m_v3HalfWidthG = vector3(0.0f);//Will store half the size of all sides
 
 	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
+
 public:
 	/*
 	USAGE: Constructor
@@ -157,6 +158,9 @@ public:
 	OUTPUT: ---
 	*/
 	void DisplayReAlligned(vector3 a_v3Color = REDEFAULT);
+
+	//map reading method
+	void ReadMap(char*);
 
 private:
 	/*

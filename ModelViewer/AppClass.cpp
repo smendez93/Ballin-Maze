@@ -53,6 +53,16 @@ void AppClass::InitVariables(void)
 	MAX_TURN = 0.45f;
 	RECOIL = .2f;
 	GRAV_STRENGTH = 1.5f;
+
+	//map reader
+	m_pMapReader = new MapReader(m_pMeshMngr->GetVertexList("Plane"));
+
+	for (int i = 0; i < 12*12; i++)
+	{
+		m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "Wall");
+		m_pBOManager->AddObject("Wall");
+		m_pMeshMngr->SetModelMatrix(m_pMapReader->drawMap()[i], "Wall");
+	}
 }
 
 void AppClass::Update(void)
@@ -141,4 +151,5 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	super::Release(); //release the memory of the inherited fields
+	SafeDelete(m_pMapReader);
 }
