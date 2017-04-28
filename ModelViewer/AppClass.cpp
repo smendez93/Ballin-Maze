@@ -38,16 +38,16 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
 
 
-	matrix4 wallOrient = glm::scale(IDENTITY_M4,vector3(2))*glm::rotate(IDENTITY_M4, 90.f, REAXISX);
-	matrix4 wallDist = glm::translate(4.f, 0.f, 0.f);
+	matrix4 wallOrient = glm::scale(IDENTITY_M4,vector3(1.f,1.f,.2f))*glm::rotate(IDENTITY_M4, 90.f, REAXISX);
+	matrix4 wallDist = glm::translate(0.f, 0.f, 0.f);
 	matrix4 wallPosition = wallDist;
 	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "DownWall");
 	wallPosition = glm::rotate(IDENTITY_M4, 90.f, REAXISY)*wallDist;
-	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "LeftWall");
+	/*m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "LeftWall");
 	wallPosition = glm::rotate(IDENTITY_M4, 180.f, REAXISY)*wallDist;
 	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "UpWall");
 	wallPosition = glm::rotate(IDENTITY_M4, 270.f, REAXISY)*wallDist;
-	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "RightWall");
+	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "RightWall");*/
 
 	ROT = 0.03f;
 	MAX_TURN = 0.45f;
@@ -57,12 +57,7 @@ void AppClass::InitVariables(void)
 	//map reader
 	m_pMapReader = new MapReader(m_pMeshMngr->GetVertexList("Plane"));
 
-	for (int i = 0; i < 12*12; i++)
-	{
-		m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "Wall");
-		m_pBOManager->AddObject("Wall");
-		m_pMeshMngr->SetModelMatrix(m_pMapReader->drawMap()[i], "Wall");
-	}
+
 }
 
 void AppClass::Update(void)
@@ -153,3 +148,8 @@ void AppClass::Release(void)
 	super::Release(); //release the memory of the inherited fields
 	SafeDelete(m_pMapReader);
 }
+//
+//void AppClass::AddWall(Wall * wall)
+//{
+//	walls.push_back(wall);
+//}

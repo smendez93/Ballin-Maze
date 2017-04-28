@@ -11,6 +11,7 @@ Date: 2015/09
 #include "MapReader.h"
 #include <iostream>
 #include <fstream>
+#include "Wall.h"
 //#include <chrono>
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
@@ -22,6 +23,8 @@ class AppClass : public ReEngAppClass
 	
 public:
 	typedef ReEngAppClass super;
+
+	std::vector<Wall*> walls;
 	
 	MyBOManager* m_pBOManager;
 
@@ -107,6 +110,8 @@ public:
 	OUTPUT: ---
 	*/
 	virtual void Release(void) final;
+
+	//virtual void AddWall(Wall* wall);
 
 };
 

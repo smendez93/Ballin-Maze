@@ -2,21 +2,6 @@
 
 MapReader::MapReader(std::vector<vector3> a_lVectorList)
 {
-	//initializing variables
-	desireddimensions = 12;
-
-	//reading in the map file
-	FileReaderClass reader;
-	reader.ReadFile("map.txt");
-	for(int i = 0; i < desireddimensions; i++) 
-	{
-		//reading each line and saving it to filecontent
-		reader.ReadNextLine(false);
-		filecontent += reader.m_sLine;
-	}
-	reader.CloseFile();
-
-	calculateDimensions(a_lVectorList);
 }
 
 void MapReader::calculateDimensions(std::vector<vector3> a_lVectorList)
@@ -58,7 +43,7 @@ std::vector<matrix4> MapReader::drawMap()
 {
 	//take the dimensions of the plane and divide it by the amount of squares desired 
 	//note the the y does not mean y value. its a vector so it only has an x and a y.
-	vector2 oneunit = vector2((dimensionofmodel.x / desireddimensions),(dimensionofmodel.y / desireddimensions));
+	vector2 oneunit = vector2((dimensionofmodel.x / DIMS), (dimensionofmodel.y / DIMS));
 
 	//makea list of mat4s to return. These mat4s will be the completed scale and transformation matrix
 	std::vector<matrix4> walllist;
@@ -66,9 +51,9 @@ std::vector<matrix4> MapReader::drawMap()
 	int increment = 0;
 
 	//going thru all the units 
-	for (int i = 0; i < desireddimensions; i++) //represents rows
+	for (int i = 0; i < DIMS; i++) //represents rows
 	{
-		for (int j = 0; j < desireddimensions; j++) //represents columns
+		for (int j = 0; j < DIMS; j++) //represents columns
 		{
 			//one unit
 			matrix4 currentunit = IDENTITY_M4;
@@ -86,19 +71,60 @@ std::vector<matrix4> MapReader::drawMap()
 
 			//Scale it  based on the text file
 			if (filecontent[increment] == '-') // smush to the top
-				currentunit *= glm::scale();
-			if (filecontent[increment] == '_')  //smush to the bottom
-				currentunit *= glm::scale();
-			if (filecontent[increment] == '|') //smush to the right
-				currentunit *= glm::scale();
+				//currentunit *= glm::scale();
+				if (filecontent[increment] == '_')  //smush to the bottom
+				//	currentunit *= glm::scale();
+					if (filecontent[increment] == '|') //smush to the right
+						//currentunit *= glm::scale();
 
-			increment++;
+						increment++;
 
 			//add it to the list
 			walllist.push_back(currentunit);
 		}
 	}
 	return walllist;
+}
+
+std::vector<Wall*> MapReader::ParseFile(std::string file)
+{
+	String filecontent;
+	char type;
+	std::vector<Wall*> walls;
+	FileReaderClass reader;
+	reader.ReadFile(file);
+	int ind = 0;
+
+	for (int r = 0; r < DIMS; r++)
+	{
+		//reading each line and saving it to filecontent
+		reader.ReadNextLine(false);
+		filecontent = reader.m_sLine;
+		for (int c = 0; c < DIMS; c++)
+		{
+			type = filecontent[c];
+			switch (type)
+			{
+			case '.':
+				break;
+			case '_':
+				walls.push_back(new Wall(vector2(c - 6, r - 6), 1, ind));
+				ind++;
+				break;
+			case '|':
+				walls.push_back(new Wall(vector2(c - 6, r - 6), 2, ind));
+				ind++;
+				break;
+			case 'L':
+				walls.push_back(new Wall(vector2(c - 6, r - 6), 1, ind));
+				walls.push_back(new Wall(vector2(c - 6, r - 6), 2, ind));
+				ind+=2;
+				break;
+			}
+		}
+	}
+	reader.CloseFile();
+	return walls;
 }
 
 
