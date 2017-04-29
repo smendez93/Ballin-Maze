@@ -12,6 +12,7 @@ Date: 2015/09
 #include <iostream>
 #include <fstream>
 #include "Wall.h"
+#include "Ball.h"
 //#include <chrono>
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
@@ -25,6 +26,8 @@ public:
 	typedef ReEngAppClass super;
 
 	std::vector<Wall*> walls;
+
+	Ball* ball;
 	
 	MyBOManager* m_pBOManager;
 

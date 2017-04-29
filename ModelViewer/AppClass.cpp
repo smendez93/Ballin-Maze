@@ -14,14 +14,16 @@ void AppClass::InitVariables(void)
 	m_pBOManager = MyBOManager::GetInstance();
 	m_sSelectedObject = "";
 
-	m_pMeshMngr->LoadModel("Planets\\03_Earth.obj", "Ball");
-	m_pMeshMngr->LoadModel("Ballin\\plane.obj", "Plane");
+	ball = new Ball("Ball", vector2(0.f), BallMat::normal);
+
+	m_pMeshMngr->LoadModel("Ballin\\ball.obj", ball->name);
+	m_pMeshMngr->LoadModel("Ballin\\floor_textured.obj", "Plane");
 	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "UpWall");
 	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "DownWall");
 	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "LeftWall");
 	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "RightWall");
 
-	m_pBOManager->AddObject("Ball");
+	m_pBOManager->AddObject(ball->name);
 	//m_pBOManager->AddObject("UpWall");
 	//m_pBOManager->AddObject("DownWall");
 	//m_pBOManager->AddObject("LeftWall");
@@ -34,7 +36,7 @@ void AppClass::InitVariables(void)
 	m_v3Rotation = vector3(0.f);
 	m_m4Rotation = IDENTITY_M4;
 
-	m_pMeshMngr->SetModelMatrix(m4Position, "Ball");
+	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
 
 
@@ -63,7 +65,7 @@ void AppClass::InitVariables(void)
 	{
 		if (walls[i]->type != Wall::none)
 		{
-			m_pMeshMngr->LoadModel("Ballin\\Wall.obj", walls[i]->name);
+			m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
 			m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 		}
 	}
@@ -99,7 +101,7 @@ void AppClass::Update(void)
 	m_m4Rotation = ToMatrix4(qRotation);
 	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Ball");
 	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
-	static matrix4 m4_ballTranslate = m_pMeshMngr->GetModelMatrix("Ball");
+	
 	vector4 camPos = (m_m4Rotation*vector4(0, 16, 0, 1));
 	static vector3 lightStart = vector3(4, 4, 4);
 	vector4 lightPos = (m_m4Rotation*vector4(lightStart, 1.f));
@@ -109,13 +111,8 @@ void AppClass::Update(void)
 	m_pLightMngr->SetPosition(vector3(lightPos.x, lightPos.y, lightPos.z));
 
 
-	static vector3 velocity(0);
-	vector4 grav(glm::normalize(-REAXISY)*GRAV_STRENGTH, 1);
-	grav = m_m4Rotation*grav;
-	velocity += vector3(grav.x*.01f, 0, grav.z*.01f);
-
-	m4_ballTranslate *= glm::translate(velocity);
-	m_pMeshMngr->SetModelMatrix(m4_ballTranslate, "Ball");
+	
+	m_pMeshMngr->SetModelMatrix(ball->Update(m_m4Rotation), ball->name);
 
 
 	////Print info on the screen
