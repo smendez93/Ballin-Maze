@@ -15,7 +15,7 @@ Wall::Wall(vector2 pos, int t, int ind)
 	m4Transform = IDENTITY_M4;
 
 	//keeping track of what number wall we are on 
-	name = "wall" + ind;
+	name = "wall" + std::to_string(ind);
 
 	matrix4 m4Scale = glm::scale(IDENTITY_M4, scale) * glm::rotate(IDENTITY_M4, 90.f, REAXISX);
 	matrix4 m4Rotation = IDENTITY_M4;
@@ -36,8 +36,8 @@ Wall::Wall(vector2 pos, int t, int ind)
 		break;
 	}
 
-	m4Transform = m4Rotation * glm::translate(position) * m4Scale;
-}
+	m4Transform = glm::translate(position) * m4Rotation * m4Scale;
+}	
 
 Wall::~Wall()
 {

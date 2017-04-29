@@ -2,7 +2,7 @@
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Model Viewer"); // Window Name
-
+	
 	// Set the clear color based on Microsoft's CornflowerBlue (default in XNA)
 	//if this line is in Init Application it will depend on the .cfg file, if it
 	//is on the InitVariables it will always force it regardless of the .cfg
@@ -16,16 +16,16 @@ void AppClass::InitVariables(void)
 
 	m_pMeshMngr->LoadModel("Planets\\03_Earth.obj", "Ball");
 	m_pMeshMngr->LoadModel("Ballin\\plane.obj", "Plane");
-	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "UpWall");
-	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "DownWall");
-	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "LeftWall");
-	m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "RightWall");
+	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "UpWall");
+	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "DownWall");
+	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "LeftWall");
+	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "RightWall");
 
 	m_pBOManager->AddObject("Ball");
-	m_pBOManager->AddObject("UpWall");
-	m_pBOManager->AddObject("DownWall");
-	m_pBOManager->AddObject("LeftWall");
-	m_pBOManager->AddObject("RightWall");
+	//m_pBOManager->AddObject("UpWall");
+	//m_pBOManager->AddObject("DownWall");
+	//m_pBOManager->AddObject("LeftWall");
+	//m_pBOManager->AddObject("RightWall");
 
 	m_selection = std::pair<int, int>(-1, -1);
 
@@ -38,11 +38,11 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
 
 
-	matrix4 wallOrient = glm::scale(IDENTITY_M4,vector3(1.f,1.f,.2f))*glm::rotate(IDENTITY_M4, 90.f, REAXISX);
-	matrix4 wallDist = glm::translate(0.f, 0.f, 0.f);
-	matrix4 wallPosition = wallDist;
-	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "DownWall");
-	wallPosition = glm::rotate(IDENTITY_M4, 90.f, REAXISY)*wallDist;
+	//matrix4 wallOrient = glm::scale(IDENTITY_M4,vector3(1.f,1.f,.2f))*glm::rotate(IDENTITY_M4, 90.f, REAXISX);
+	//matrix4 wallDist = glm::translate(0.f, 0.f, 0.f);
+	//matrix4 wallPosition = wallDist;
+	//m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "DownWall");
+	//wallPosition = glm::rotate(IDENTITY_M4, 90.f, REAXISY)*wallDist;
 	/*m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "LeftWall");
 	wallPosition = glm::rotate(IDENTITY_M4, 180.f, REAXISY)*wallDist;
 	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "UpWall");
@@ -57,7 +57,16 @@ void AppClass::InitVariables(void)
 	//map reader
 	m_pMapReader = new MapReader(m_pMeshMngr->GetVertexList("Plane"));
 
+	walls = m_pMapReader->ParseFile("Map.txt");
 
+	for (int i = 0; i < walls.size(); i++)
+	{
+		if (walls[i]->type != Wall::none)
+		{
+			m_pMeshMngr->LoadModel("Ballin\\Wall.obj", walls[i]->name);
+			m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
+		}
+	}
 }
 
 void AppClass::Update(void)
@@ -92,22 +101,22 @@ void AppClass::Update(void)
 	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
 	static matrix4 m4_ballTranslate = m_pMeshMngr->GetModelMatrix("Ball");
 	vector4 camPos = (m_m4Rotation*vector4(0, 16, 0, 1));
-	static vector3 lightStart = vector3(4,4,4);
+	static vector3 lightStart = vector3(4, 4, 4);
 	vector4 lightPos = (m_m4Rotation*vector4(lightStart, 1.f));
 
-	m_pCameraMngr->SetPositionTargetAndView(vector3(camPos.x, camPos.y, camPos.z),vector3(0),-REAXISZ);
-	
+	m_pCameraMngr->SetPositionTargetAndView(vector3(camPos.x, camPos.y, camPos.z), vector3(0), -REAXISZ);
+
 	m_pLightMngr->SetPosition(vector3(lightPos.x, lightPos.y, lightPos.z));
 
-	
+
 	static vector3 velocity(0);
-	vector4 grav(glm::normalize(-REAXISY)*GRAV_STRENGTH,1);
+	vector4 grav(glm::normalize(-REAXISY)*GRAV_STRENGTH, 1);
 	grav = m_m4Rotation*grav;
-	velocity += vector3(grav.x*.01f,0, grav.z*.01f);
+	velocity += vector3(grav.x*.01f, 0, grav.z*.01f);
 
 	m4_ballTranslate *= glm::translate(velocity);
-	m_pMeshMngr->SetModelMatrix(m4_ballTranslate,"Ball");
-	
+	m_pMeshMngr->SetModelMatrix(m4_ballTranslate, "Ball");
+
 
 	////Print info on the screen
 	//m_pMeshMngr->PrintLine("");//Add a line on top
@@ -147,6 +156,7 @@ void AppClass::Release(void)
 {
 	super::Release(); //release the memory of the inherited fields
 	SafeDelete(m_pMapReader);
+	walls.clear();
 }
 //
 //void AppClass::AddWall(Wall * wall)
