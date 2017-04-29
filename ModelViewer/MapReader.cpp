@@ -3,7 +3,7 @@
 MapReader::MapReader(std::vector<vector3> a_lVectorList)
 {
 }
-
+/*
 void MapReader::calculateDimensions(std::vector<vector3> a_lVectorList)
 {
 	//get the max and the min
@@ -85,7 +85,7 @@ std::vector<matrix4> MapReader::drawMap()
 	}
 	return walllist;
 }
-
+*/
 std::vector<Wall*> MapReader::ParseFile(std::string file)
 {
 	String filecontent;
