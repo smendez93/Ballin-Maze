@@ -26,10 +26,12 @@ Wall::Wall(vector2 pos, int t, int ind)
 	case down:
 		m4Rotation = glm::rotate(IDENTITY_M4, 270.f, REAXISY);
 		position.x += SIZE / 2.f;
+		position.y += 0.4f;
 		position.z += SIZE;
 		break;
 	case right:
 		position.x += SIZE;
+		position.y += 0.4f;
 		position.z += SIZE / 2.f;
 		break;
 	case none:		

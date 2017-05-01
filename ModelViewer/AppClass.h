@@ -116,6 +116,7 @@ public:
 
 	//virtual void AddWall(Wall* wall);
 
+	void ResetBoard();
 };
 
 #endif //__APPLICATION_H_

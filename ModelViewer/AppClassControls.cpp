@@ -25,7 +25,7 @@ void AppClass::ProcessKeyboard(void)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
-		m_qArcBall = m_qOrientation = quaternion();
+		ResetBoard();
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))

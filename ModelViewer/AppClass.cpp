@@ -16,41 +16,18 @@ void AppClass::InitVariables(void)
 
 	ball = new Ball("Ball", vector2(0.f), BallMat::normal);
 
-	m_pMeshMngr->LoadModel("Ballin\\ball.obj", ball->name);
-	m_pMeshMngr->LoadModel("Ballin\\floor_textured.obj", "Plane");
-	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "UpWall");
-	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "DownWall");
-	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "LeftWall");
-	//m_pMeshMngr->LoadModel("Ballin\\Wall.obj", "RightWall");
-
+	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name);
+	m_pMeshMngr->LoadModel("Ballin\\plane_textured.obj", "Plane");
 	m_pBOManager->AddObject(ball->name);
-	//m_pBOManager->AddObject("UpWall");
-	//m_pBOManager->AddObject("DownWall");
-	//m_pBOManager->AddObject("LeftWall");
-	//m_pBOManager->AddObject("RightWall");
 
 	m_selection = std::pair<int, int>(-1, -1);
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	matrix4 m4Position = glm::scale(vector3(.1f))* glm::translate(vector3(0.0f, 1.0f, 0.0f));
 	m_v3Rotation = vector3(0.f);
 	m_m4Rotation = IDENTITY_M4;
 
 	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
-
-
-	//matrix4 wallOrient = glm::scale(IDENTITY_M4,vector3(1.f,1.f,.2f))*glm::rotate(IDENTITY_M4, 90.f, REAXISX);
-	//matrix4 wallDist = glm::translate(0.f, 0.f, 0.f);
-	//matrix4 wallPosition = wallDist;
-	//m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "DownWall");
-	//wallPosition = glm::rotate(IDENTITY_M4, 90.f, REAXISY)*wallDist;
-	/*m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "LeftWall");
-	wallPosition = glm::rotate(IDENTITY_M4, 180.f, REAXISY)*wallDist;
-	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "UpWall");
-	wallPosition = glm::rotate(IDENTITY_M4, 270.f, REAXISY)*wallDist;
-	m_pMeshMngr->SetModelMatrix(wallPosition*wallOrient, "RightWall");*/
-
+	
 	ROT = 0.03f;
 	MAX_TURN = 0.45f;
 	RECOIL = .2f;
@@ -103,7 +80,7 @@ void AppClass::Update(void)
 	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
 	
 	vector4 camPos = (m_m4Rotation*vector4(0, 16, 0, 1));
-	static vector3 lightStart = vector3(4, 4, 4);
+	vector3 lightStart = vector3(4, 4, 4);
 	vector4 lightPos = (m_m4Rotation*vector4(lightStart, 1.f));
 
 	m_pCameraMngr->SetPositionTargetAndView(vector3(camPos.x, camPos.y, camPos.z), vector3(0), -REAXISZ);
@@ -154,6 +131,16 @@ void AppClass::Release(void)
 	super::Release(); //release the memory of the inherited fields
 	SafeDelete(m_pMapReader);
 	walls.clear();
+}
+
+void AppClass::ResetBoard()
+{
+	m_v3Rotation = vector3(0.f);
+	m_m4Rotation = IDENTITY_M4;
+	std::string ballName = ball->name;
+	delete ball;
+	ball = new Ball(ballName, vector2(0.f), BallMat::normal);
+
 }
 //
 //void AppClass::AddWall(Wall * wall)
