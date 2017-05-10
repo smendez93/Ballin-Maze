@@ -18,6 +18,8 @@ void AppClass::InitVariables(void)
 
 	ball = new Ball("Ball", vector2(-CORNER,CORNER), BallMat::rubber);
 
+	m_iLevelCounter = 0;
+
 	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name + "1");
 	m_pMeshMngr->LoadModel("Ballin\\FuzzyBall.obj", ball->name + "2");
 	m_pMeshMngr->LoadModel("Ballin\\LeadBall.obj", ball->name + "3");
@@ -47,7 +49,7 @@ void AppClass::InitVariables(void)
 	//map reader
 	m_pMapReader = new MapReader(m_pMeshMngr->GetVertexList("Plane"));
 
-	walls = m_pMapReader->ParseFile("Map.txt");
+	walls = m_pMapReader->ParseFile("Map"+ std::to_string(m_iLevelCounter) +".txt");
 
 	for (unsigned int i = 0; i < walls.size(); i++)
 	{
@@ -112,6 +114,29 @@ void AppClass::Update(void)
 
 	matrix4 cubeSpot = glm::translate(vector3(CORNER, 0.f, -CORNER))*glm::scale(vector3(.8f,.2f,.8f));
 	m_pMeshMngr->AddCubeToRenderList(cubeSpot, REGREEN, SOLID);
+	if (ball->position.x > CORNER && ball->position.z < CORNER )
+	{
+		if (m_iLevelCounter == 2)
+		{
+			m_iLevelCounter = 0;
+		}
+		else
+		{
+			m_iLevelCounter++;
+			walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
+			for (unsigned int i = 0; i < walls.size(); i++)
+			{
+				if (walls[i]->type != Wall::none)
+				{
+					m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
+					m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
+				}
+			}
+			m_pMaze = new QuadNode(walls, 4);
+			ResetBoard();
+		}
+		
+	}
 
 	m_pMeshMngr->Print("\n");
 	m_pMeshMngr->Print("Change Ball Type: ");

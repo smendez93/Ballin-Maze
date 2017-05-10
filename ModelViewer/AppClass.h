@@ -36,6 +36,8 @@ public:
 
 	QuadNode* m_pMaze;
 
+	int m_iLevelCounter;
+
 
 	vector3 m_v3Rotation;
 	matrix4 m_m4Rotation;

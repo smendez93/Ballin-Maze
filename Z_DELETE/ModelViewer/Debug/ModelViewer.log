@@ -1,11 +1,4 @@
-﻿  Wall.cpp
-  QuadNode.cpp
-  MapReader.cpp
-  Main.cpp
-  Ball.cpp
-  AppClassControls.cpp
-  AppClass.cpp
-  Generating Code...
+﻿  AppClass.cpp
   ModelViewer.vcxproj -> D:\Profiles\jew3873\Ballin-Maze\Z_DELETE\ModelViewerD.exe
   ModelViewer.vcxproj -> D:\Profiles\jew3873\Ballin-Maze\Z_DELETE\ModelViewerD.pdb (Full PDB)
   A subdirectory or file D:\Profiles\jew3873\Ballin-Maze\_Binary\ already exists.
