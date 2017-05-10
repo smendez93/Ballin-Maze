@@ -112,6 +112,7 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
     <ClInclude Include="MapReader.h" />
     <ClInclude Include="MyBOClass.h" />
     <ClInclude Include="MyBOManager.h" />
+    <ClInclude Include="QuadNode.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +126,7 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
     <ClCompile Include="MapReader.cpp" />
     <ClCompile Include="MyBOClass.cpp" />
     <ClCompile Include="MyBOManager.cpp" />
+    <ClCompile Include="QuadNode.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

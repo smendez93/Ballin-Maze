@@ -39,6 +39,9 @@
     <ClInclude Include="BallMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QuadNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc">
@@ -68,6 +71,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

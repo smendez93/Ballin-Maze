@@ -1,6 +1,6 @@
 #include "QuadNode.h"
 
-QuadNode::QuadNode(std::vector<MyEntityClass*> objects, unsigned int depth)
+QuadNode::QuadNode(std::vector<Wall*> objects, unsigned int depth)
 {
 	// Calc min/max
 	CalculateHull(objects);
@@ -55,12 +55,12 @@ void QuadNode::GenerateChildren(unsigned int nextDepth)
 	}
 }
 
-void QuadNode::CalculateHull(std::vector<MyEntityClass*> objects)
+void QuadNode::CalculateHull(std::vector<Wall*> objects)
 {
 	// Calc min/max values
 	vector3 hullMin = vector3(FLT_MAX);
 	vector3 hullMax = vector3(-FLT_MAX);
-	for (MyEntityClass* obj : objects) {
+	for (Wall* obj : objects) {
 		MyBoundingBoxClass* box = obj->GetBoundingBox();
 		vector3 obMin = box->GetCenterGlobal() - box->GetHalfWidthG();
 		vector3 obMax = box->GetCenterGlobal() + box->GetHalfWidthG();
@@ -77,15 +77,15 @@ void QuadNode::CalculateHull(std::vector<MyEntityClass*> objects)
 	this->max = hullMax;
 }
 
-void QuadNode::AddAll(std::vector<MyEntityClass*> objects)
+void QuadNode::AddAll(std::vector<Wall*> objects)
 {
 	// For each obj in parent...
-	for (MyEntityClass* obj : objects) {
+	for (Wall* obj : objects) {
 		Add(obj);
 	}
 }
 
-bool QuadNode::Add(MyEntityClass * object)
+bool QuadNode::Add(Wall * object)
 {
 	// If object is not contained in the child
 	if (!Contains(object->GetBoundingBox()))
@@ -102,7 +102,7 @@ bool QuadNode::Add(MyEntityClass * object)
 	return true;
 }
 
-bool QuadNode::Contains(MyBoundingBoxClass* box)
+bool QuadNode::Contains(Wall* box)
 {
 	// Check if box is within the node
 	vector3 b_min = box->GetCenterGlobal() - box->GetHalfWidthG();
@@ -118,7 +118,7 @@ bool QuadNode::Contains(MyBoundingBoxClass* box)
 	return false;
 }
 
-bool QuadNode::Collides(MyBoundingBoxClass * box)
+bool QuadNode::Collides(Ball * box)
 {
 	// Check box collisions
 
@@ -155,7 +155,7 @@ void QuadNode::Render()
 }
 
 
-bool QuadNode::CheckCollision(MyEntityClass * object)
+bool QuadNode::CheckCollision(Ball * object)
 {
 	if (!Collides(object->GetBoundingBox()))
 		return false;
