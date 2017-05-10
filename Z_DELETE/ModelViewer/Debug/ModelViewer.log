@@ -1,37 +1,37 @@
 ﻿  AppClass.cpp
-c:\users\aaron\documents\visual studio 2015\projects\ballinmaze\modelviewer\appclass.cpp(133): warning C4018: '>': signed/unsigned mismatch
-  ModelViewer.vcxproj -> C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\Z_DELETE\ModelViewerD.exe
-  ModelViewer.vcxproj -> C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\Z_DELETE\ModelViewerD.pdb (Full PDB)
-  A subdirectory or file C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\_Binary\ already exists.
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\GL\bin\glew32.dll
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\GL\bin\glut32.dll
+d:\profiles\jew3873\ballin-maze\modelviewer\appclass.cpp(134): warning C4018: '>': signed/unsigned mismatch
+  ModelViewer.vcxproj -> D:\Profiles\jew3873\Ballin-Maze\Z_DELETE\ModelViewerD.exe
+  ModelViewer.vcxproj -> D:\Profiles\jew3873\Ballin-Maze\Z_DELETE\ModelViewerD.pdb (Full PDB)
+  A subdirectory or file D:\Profiles\jew3873\Ballin-Maze\_Binary\ already exists.
+  D:\Profiles\jew3873\Ballin-Maze\include\GL\bin\glew32.dll
+  D:\Profiles\jew3873\Ballin-Maze\include\GL\bin\glut32.dll
   2 File(s) copied
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\bin\2015\ReEng_VS15.dll
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\bin\2015\ReEng_VS15_d.dll
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\bin\2015\ReEng_VS15.dll
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\bin\2015\ReEng_VS15_d.dll
   2 File(s) copied
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\SFML\bin\sfml-system-2.dll
+  D:\Profiles\jew3873\Ballin-Maze\include\SFML\bin\sfml-system-2.dll
   1 File(s) copied
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\SFML\bin\sfml-window-2.dll
+  D:\Profiles\jew3873\Ballin-Maze\include\SFML\bin\sfml-window-2.dll
   1 File(s) copied
-  A subdirectory or file C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\_Binary\Shaders\ already exists.
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Basic.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Basic.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\BasicColor.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\BasicColor.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Color.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Color.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\PassThrough.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\PassThrough.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Phong.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Phong.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\REShader.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\REShader.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\REShaderInv.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\REShaderMC.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Skybox.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Skybox.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Test.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\Test.vs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\TextShader.fs
-  C:\Users\Aaron\Documents\Visual Studio 2015\Projects\BallinMaze\include\RE\Shaders\TextShader.vs
+  A subdirectory or file D:\Profiles\jew3873\Ballin-Maze\_Binary\Shaders\ already exists.
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Basic.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Basic.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\BasicColor.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\BasicColor.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Color.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Color.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\PassThrough.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\PassThrough.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Phong.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Phong.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\REShader.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\REShader.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\REShaderInv.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\REShaderMC.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Skybox.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Skybox.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Test.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\Test.vs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\TextShader.fs
+  D:\Profiles\jew3873\Ballin-Maze\include\RE\Shaders\TextShader.vs
   20 File(s) copied

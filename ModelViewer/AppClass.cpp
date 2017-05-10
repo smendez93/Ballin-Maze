@@ -124,23 +124,23 @@ void AppClass::Update(void)
 		else
 		{
 			m_iLevelCounter++;
-			walls.clear();
-			walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
-			for (unsigned int i = 0; i < walls.size(); i++)
-			{
-				if (walls[i]->type != Wall::none)
-				{
-					if (i > m_numWallModels)
-					{
-						m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
-						m_numWallModels++;
-					}
-					m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
-				}
-			}
-			m_pMaze = new QuadNode(walls, 4);
-			ResetBoard();
 		}
+		walls.clear();
+		walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
+		for (unsigned int i = 0; i < walls.size(); i++)
+		{
+			if (walls[i]->type != Wall::none)
+			{
+				if (i > m_numWallModels)
+				{
+					m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
+					m_numWallModels++;
+				}
+				m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
+			}
+		}
+		m_pMaze = new QuadNode(walls, 4);
+		ResetBoard();
 	}
 	m_pMeshMngr->Print("\n");
 	m_pMeshMngr->Print("Change Ball Type: ");
