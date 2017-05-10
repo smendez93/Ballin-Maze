@@ -8,6 +8,7 @@ Ball::Ball(std::string name, vector2 position, BallMaterial material = BallMat::
 	this->velocity = vector3(0.f);
 	this->material = material;
 	this->m4Scale = glm::scale(vector3(.2f));
+	this->scale = .2f;
 	this->m4Translation = glm::translate(this->position);
 	this->m4Rotation = IDENTITY_M4;
 }
@@ -22,7 +23,10 @@ matrix4 Ball::Update(matrix4 planeRotation)
 	quaternion end = quaternion(vector3(glm::dot(REAXISZ,velocity), 0.f, glm::dot(-REAXISX, velocity)));
 	quaternion roll = glm::mix(start, end, (float)(velocity.length()));
 
-	m4Translation *= glm::translate(velocity);
+	position += velocity;
+	m4Translation = IDENTITY_M4 * glm::translate(position);
+	
+
 	m4Rotation = glm::mat4_cast(roll)*m4Rotation;
 	return GetMatrix();
 }
@@ -30,6 +34,16 @@ matrix4 Ball::Update(matrix4 planeRotation)
 matrix4 Ball::GetMatrix()
 {
 	return m4Translation * m4Rotation * m4Scale;
+}
+
+vector3 Ball::GetCenterGlobal()
+{
+	return position;
+}
+
+float Ball::GetRadius()
+{
+	return scale / 2.f;
 }
 
 Ball::~Ball()

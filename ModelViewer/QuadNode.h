@@ -16,6 +16,9 @@ private:
 	bool Add(Wall* object);
 	bool Contains(Wall* box);
 	bool Collides(Ball* box);
+
+	bool IsColliding(Ball* ball, Wall* wall, vector3& normal);
+
 public:
 
 	//+x = 0_2_
@@ -27,7 +30,7 @@ public:
 
 	~QuadNode();
 
-	bool CheckCollision(Ball* object);
+	bool CheckCollision(Ball* object, vector3& reflect);
 	void Render();
 };
 

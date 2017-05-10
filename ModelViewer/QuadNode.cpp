@@ -61,9 +61,8 @@ void QuadNode::CalculateHull(std::vector<Wall*> objects)
 	vector3 hullMin = vector3(FLT_MAX);
 	vector3 hullMax = vector3(-FLT_MAX);
 	for (Wall* obj : objects) {
-		MyBoundingBoxClass* box = obj->GetBoundingBox();
-		vector3 obMin = box->GetCenterGlobal() - box->GetHalfWidthG();
-		vector3 obMax = box->GetCenterGlobal() + box->GetHalfWidthG();
+		vector3 obMin = obj->GetCenterGlobal() - obj->GetHalfWidth();
+		vector3 obMax = obj->GetCenterGlobal() + obj->GetHalfWidth();
 
 		if (hullMin.x > obMin.x) hullMin.x = obMin.x;
 		if (hullMin.y > obMin.y) hullMin.y = obMin.y;
@@ -88,7 +87,7 @@ void QuadNode::AddAll(std::vector<Wall*> objects)
 bool QuadNode::Add(Wall * object)
 {
 	// If object is not contained in the child
-	if (!Contains(object->GetBoundingBox()))
+	if (!Contains(object))
 		return false;
 	for (int i = 0; i < 4; i++)
 	{
@@ -105,8 +104,8 @@ bool QuadNode::Add(Wall * object)
 bool QuadNode::Contains(Wall* box)
 {
 	// Check if box is within the node
-	vector3 b_min = box->GetCenterGlobal() - box->GetHalfWidthG();
-	vector3 b_max = box->GetCenterGlobal() + box->GetHalfWidthG();
+	vector3 b_min = box->GetCenterGlobal() - box->GetHalfWidth();
+	vector3 b_max = box->GetCenterGlobal() + box->GetHalfWidth();
 	if (   (b_min.x >= min.x)
 		&& (b_min.z >= min.z)
 		&& (b_max.x <= max.x)
@@ -118,12 +117,12 @@ bool QuadNode::Contains(Wall* box)
 	return false;
 }
 
-bool QuadNode::Collides(Ball * box)
+bool QuadNode::Collides(Ball * ball)
 {
 	// Check box collisions
 
-	vector3 b_min = box->GetCenterGlobal() - box->GetHalfWidthG();
-	vector3 b_max = box->GetCenterGlobal() + box->GetHalfWidthG();
+	vector3 b_min = ball->GetCenterGlobal() - vector3(ball->GetRadius());
+	vector3 b_max = ball->GetCenterGlobal() + vector3(ball->GetRadius());
 	bool bColliding = true;
 
 	//Check for X
@@ -141,6 +140,80 @@ bool QuadNode::Collides(Ball * box)
 	return bColliding;
 }
 
+bool QuadNode::IsColliding(Ball * ball, Wall * wall, vector3 & normal)
+{
+	bool onEdge = false;
+	vector3 point = ball->GetCenterGlobal() - wall->GetCenterGlobal();
+	point.y = 0;
+	vector3 bounds = wall->GetHalfWidth();
+	bounds.y = 0;
+
+	//bind point to wall collision box
+	if (point.x > bounds.x)
+	{
+		point.x = bounds.x;
+		onEdge = true;
+	}
+	if (point.z > bounds.z)
+	{
+		point.z = bounds.z;
+		onEdge = true;
+	}
+
+	if (point.x < -bounds.x)
+	{
+		point.x = -bounds.x;
+		onEdge = true;
+	}
+	if (point.z < -bounds.z)
+	{
+		point.z = -bounds.z;
+		onEdge = true;
+	}
+
+	if (!onEdge) {
+		vector3 slope = point / wall->GetHalfWidth();
+		if (slope.x < 0) slope.x = -slope.x;
+		if (slope.z < 0) slope.z = -slope.z;
+
+		if (slope.x > slope.z)
+		{
+			//tertiary to maintain sign
+			point.x = wall->GetHalfWidth().x*(point.x > 0 ? 1 : -1);
+		}
+		else
+		{
+			//tertiary to maintain sign
+			point.z = wall->GetHalfWidth().z*(point.z > 0 ? 1 : -1);
+		}
+	}
+	//find vector from closest wall point to ball
+	vector3 distance = (ball->GetCenterGlobal() - wall->GetCenterGlobal()) - point;
+	distance.y = 0;
+
+	if (!onEdge || glm::length(distance) < ball->GetRadius())
+	{
+		vector3 rePosition = vector3(0.f);
+		// collision
+		if (onEdge)
+		{
+			rePosition = (distance*ball->GetRadius() / glm::length(distance))-distance;
+			normal = (distance / glm::length(distance));
+		}
+		else {
+			rePosition = -(distance*ball->GetRadius() / glm::length(distance)) - distance;
+			normal = -(distance / glm::length(distance));
+		}
+		rePosition.y = 0;
+		normal.y = 0;
+		ball->position += rePosition;
+		ball->m4Translation = glm::translate(ball->position);
+		return true;
+	}
+	normal = vector3(0.f);
+	return false;
+}
+
 void QuadNode::Render()
 {
 	// Render cube wireframe
@@ -155,26 +228,35 @@ void QuadNode::Render()
 }
 
 
-bool QuadNode::CheckCollision(Ball * object)
+bool QuadNode::CheckCollision(Ball * object, vector3& reflect)
 {
-	if (!Collides(object->GetBoundingBox()))
+	vector3 tempReflect = vector3(0.f);
+	reflect = tempReflect;
+	if (!Collides(object))
+	{
 		return false;
-
+	}
+	bool anyCollide = false;
 	// For each obj
 	for (unsigned int a = 0; a < objs.size(); a++)
 	{
-		if (objs[a] != object && object->IsColliding(objs[a]))
-			return true;
+		if (IsColliding(object, objs[a], tempReflect))
+		{
+			reflect += tempReflect;
+			anyCollide = true;
+		}
 	}
 
 	// Check child nodes
 	for (unsigned int n = 0; n < 4; n++)
 	{
-		if (nodes[n] != nullptr && nodes[n]->CheckCollision(object))
-			return true;
-		
+		if (nodes[n] != nullptr && nodes[n]->CheckCollision(object, tempReflect))
+		{
+			reflect += tempReflect;
+			anyCollide = true;
+		}
 	}
-	return false;
+	return anyCollide;
 }
 
 

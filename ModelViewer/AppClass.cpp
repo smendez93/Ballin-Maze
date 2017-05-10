@@ -11,14 +11,12 @@ void AppClass::InitWindow(String a_sWindowName)
 void AppClass::InitVariables(void)
 {
 	m_pCameraMngr->SetPosition(vector3(0.f, 10.f, 10.f));
-	m_pBOManager = MyBOManager::GetInstance();
 	m_sSelectedObject = "";
 
 	ball = new Ball("Ball", vector2(0.f), BallMat::normal);
 
 	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name);
 	m_pMeshMngr->LoadModel("Ballin\\plane_textured.obj", "Plane");
-	m_pBOManager->AddObject(ball->name);
 
 	m_selection = std::pair<int, int>(-1, -1);
 
@@ -46,6 +44,7 @@ void AppClass::InitVariables(void)
 			m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 		}
 	}
+	m_pMaze = new QuadNode(walls, 4);
 }
 
 void AppClass::Update(void)
@@ -87,9 +86,18 @@ void AppClass::Update(void)
 
 	m_pLightMngr->SetPosition(vector3(lightPos.x, lightPos.y, lightPos.z));
 
+	ball->Update(m_m4Rotation);
+	vector3 rebound = vector3(0.f);
+	if (m_pMaze->CheckCollision(ball, rebound)) {
+		//perform reflection of velocity
+		vector3 rejection = -(ball->velocity-(ball->velocity-(rebound*glm::dot(ball->velocity, rebound)/(glm::dot(rebound,rebound)))));
 
+		ball->velocity += rejection; //zeroes relative to normal
+		ball->velocity += rejection*ball->material.bounce; // rebound based on bounce factor;
+
+	}
 	
-	m_pMeshMngr->SetModelMatrix(ball->Update(m_m4Rotation), ball->name);
+	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 
 
 	////Print info on the screen

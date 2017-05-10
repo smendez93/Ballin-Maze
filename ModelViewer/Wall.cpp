@@ -39,9 +39,20 @@ Wall::Wall(vector2 pos, int t, int ind)
 	}
 
 	m4Transform = glm::translate(position) * m4Rotation * m4Scale;
+	m_v3Bounds = vector3(vector4(1.f,1.f,1.f,0.f)*m4Rotation*m4Scale);
 }	
 
 Wall::~Wall()
 {
+}
+
+vector3 Wall::GetCenterGlobal()
+{
+	return position;
+}
+
+vector3 Wall::GetHalfWidth()
+{
+	return m_v3Bounds / 2.f;
 }
 

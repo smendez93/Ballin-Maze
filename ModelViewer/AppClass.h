@@ -7,10 +7,10 @@ Date: 2015/09
 
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
-#include "MyBOManager.h"
 #include "MapReader.h"
 #include <iostream>
 #include <fstream>
+#include "QuadNode.h"
 #include "Wall.h"
 #include "Ball.h"
 //#include <chrono>
@@ -28,10 +28,11 @@ public:
 	std::vector<Wall*> walls;
 
 	Ball* ball;
-	
-	MyBOManager* m_pBOManager;
 
 	MapReader* m_pMapReader;
+
+	QuadNode* m_pMaze;
+
 
 	vector3 m_v3Rotation;
 	matrix4 m_m4Rotation;

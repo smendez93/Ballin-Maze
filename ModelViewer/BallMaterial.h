@@ -7,5 +7,5 @@ struct BallMaterial {
 	float gravity;
 };
 namespace BallMat {
-	const BallMaterial normal = { 0.f,0.02f,0.5f,0.4f };
+	const BallMaterial normal = { 0.f,0.02f,1.f,0.4f };
 }

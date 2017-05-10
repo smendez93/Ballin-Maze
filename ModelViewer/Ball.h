@@ -10,6 +10,7 @@ public:
 
 	vector3 position;
 	vector3 velocity;
+	float scale;
 
 	matrix4 m4Translation;
 	matrix4 m4Rotation;
@@ -19,6 +20,10 @@ public:
 
 	matrix4 Update(matrix4 planeRotation);
 	matrix4 GetMatrix();
+
+	vector3 GetCenterGlobal();
+	float GetRadius();
+
 	~Ball();
 };
 

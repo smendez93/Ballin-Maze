@@ -21,12 +21,6 @@
     <ClInclude Include="AppClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyBOManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyBOClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MapReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -56,12 +50,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyBOClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyBOManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MapReader.cpp">
