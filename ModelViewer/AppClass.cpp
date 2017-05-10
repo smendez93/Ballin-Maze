@@ -1,6 +1,7 @@
 #include "AppClass.h"
 
 #define CORNER 3.6f
+#define NUM_LEVELS 3
 
 void AppClass::InitWindow(String a_sWindowName)
 {
@@ -117,7 +118,7 @@ void AppClass::Update(void)
 	m_pMeshMngr->AddCubeToRenderList(cubeSpot, REGREEN, SOLID);
 	if (ball->position.x > 3.0f && ball->position.z < -3.0f)
 	{
-		if (m_iLevelCounter == 2)
+		if (m_iLevelCounter == NUM_LEVELS -1)
 		{
 			m_iLevelCounter = 0;
 		}

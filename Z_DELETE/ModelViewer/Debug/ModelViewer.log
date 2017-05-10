@@ -1,5 +1,5 @@
 ﻿  AppClass.cpp
-d:\profiles\jew3873\ballin-maze\modelviewer\appclass.cpp(134): warning C4018: '>': signed/unsigned mismatch
+d:\profiles\jew3873\ballin-maze\modelviewer\appclass.cpp(135): warning C4018: '>': signed/unsigned mismatch
   ModelViewer.vcxproj -> D:\Profiles\jew3873\Ballin-Maze\Z_DELETE\ModelViewerD.exe
   ModelViewer.vcxproj -> D:\Profiles\jew3873\Ballin-Maze\Z_DELETE\ModelViewerD.pdb (Full PDB)
   A subdirectory or file D:\Profiles\jew3873\Ballin-Maze\_Binary\ already exists.
