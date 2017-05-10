@@ -7,9 +7,6 @@ void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Model Viewer"); // Window Name
 	
-	// Set the clear color based on Microsoft's CornflowerBlue (default in XNA)
-	//if this line is in Init Application it will depend on the .cfg file, if it
-	//is on the InitVariables it will always force it regardless of the .cfg
 	m_v4ClearColor = vector4(0.0f);
 }
 void AppClass::InitVariables(void)
@@ -19,15 +16,16 @@ void AppClass::InitVariables(void)
 
 	ball = new Ball("Ball", vector2(-CORNER, CORNER), BallMat::rubber);
 
-	m_iLevelCounter = 0;
+	m_iLevelCounter = 0; // used to increment the level loader
 
+	// load all balls 
 	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name + "1");
 	m_pMeshMngr->LoadModel("Ballin\\FuzzyBall.obj", ball->name + "2");
 	m_pMeshMngr->LoadModel("Ballin\\LeadBall.obj", ball->name + "3");
 
 	ball->name = "Ball1";
 
-	m_pMeshMngr->SetModelMatrix(DEAD, "Ball1");
+	m_pMeshMngr->SetModelMatrix(DEAD, "Ball1");// load under the map
 	m_pMeshMngr->SetModelMatrix(DEAD, "Ball2");
 	m_pMeshMngr->SetModelMatrix(DEAD, "Ball3");
 
@@ -41,7 +39,7 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
 
 
-
+	//Enviromental Constants
 	ROT = 0.03f;
 	MAX_TURN = 0.45f;
 	RECOIL = .2f;
@@ -76,22 +74,16 @@ void AppClass::Update(void)
 	if (m_bFPC)
 		CameraRotation();
 
-	//if (m_sSelectedObject != "")
-	//{
-	//	m_pMeshMngr->SetModelMatrix(ToMatrix4(m_qOrientation * m_qArcBall), m_sSelectedObject);
-	//}
-
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 
+	//Camera and Light position 
 	quaternion qRotation = glm::quat(m_v3Rotation);
 
 	m_m4Rotation = ToMatrix4(qRotation);
-	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Ball");
-	//m_pMeshMngr->SetModelMatrix(m_m4Rotation, "Plane");
 	
 	vector4 camPos = (m_m4Rotation*vector4(0, 16, 0, 1));
 	vector3 lightStart = vector3(4, 4, 4);
@@ -114,8 +106,11 @@ void AppClass::Update(void)
 	
 	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 
+	//Defining the goal
 	matrix4 cubeSpot = glm::translate(vector3(CORNER, 0.f, -CORNER))*glm::scale(vector3(.8f,.2f,.8f));
 	m_pMeshMngr->AddCubeToRenderList(cubeSpot, REGREEN, SOLID);
+	
+	//Level progression
 	if (ball->position.x > 3.0f && ball->position.z < -3.0f)
 	{
 		if (m_iLevelCounter == NUM_LEVELS -1)
@@ -143,6 +138,8 @@ void AppClass::Update(void)
 		m_pMaze = new QuadNode(walls, 4);
 		ResetBoard();
 	}
+
+	// UI Elements
 	m_pMeshMngr->Print("\n");
 	m_pMeshMngr->Print("Change Ball Type: ");
 	m_pMeshMngr->Print("(1)Rubber, ", REYELLOW);
@@ -153,34 +150,12 @@ void AppClass::Update(void)
 	m_pMeshMngr->Print("Tilt: ");
 	m_pMeshMngr->Print("Arrow Keys\n", REYELLOW);
 
-	////Print info on the screen
-	//m_pMeshMngr->PrintLine("");//Add a line on top
-	//m_pMeshMngr->PrintLine(m_pSystem->GetAppName());
-	//m_pMeshMngr->Print("Model: ");
-	//m_pMeshMngr->PrintLine(m_sSelectedObject, REGREEN);
-	//m_pMeshMngr->Print("Selection: ");
-	//m_pMeshMngr->PrintLine(m_pMeshMngr->GetInstanceGroupName(m_selection.first, m_selection.second), REYELLOW);
-	//m_pMeshMngr->Print("State: ");
-	//if (m_sSelectedObject != "")
-	//{
-	//	InstanceClass* pInstance = m_pMeshMngr->GetInstanceByName(m_sSelectedObject);
-	//	int nState = pInstance->GetCurrentState();
-	//	m_pMeshMngr->PrintLine(std::to_string(nState), REGREEN);
-	//}
-	//else
-	//{
-	//	m_pMeshMngr->PrintLine("", REGREEN);
-	//}
-	//m_pMeshMngr->Print("FPS:");
-	//m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 }
 
 void AppClass::Display(void)
 {
 	//clear the screen
 	ClearScreen();
-	//Render the grid based on the camera's mode:
-	//m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
 
 	m_pMeshMngr->Render(); //renders the render list
 	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
@@ -201,11 +176,7 @@ void AppClass::ResetBoard()
 	std::string ballName = ball->name;
 	BallMaterial ballMat = ball->material;
 	delete ball;
-	ball = new Ball(ballName, vector2(-CORNER, CORNER), ballMat);
+	ball = new Ball(ballName, vector2(-CORNER, CORNER), ballMat); // send the ball back to the corner
 
 }
-//
-//void AppClass::AddWall(Wall * wall)
-//{
-//	walls.push_back(wall);
-//}
+

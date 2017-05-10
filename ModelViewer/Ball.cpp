@@ -1,6 +1,6 @@
 #include "Ball.h"
 
-
+//Ball constructor
 Ball::Ball(std::string name, vector2 position, BallMaterial material)
 {
 	this->name = name;
@@ -13,15 +13,17 @@ Ball::Ball(std::string name, vector2 position, BallMaterial material)
 	this->m4Rotation = IDENTITY_M4;
 }
 
+//Updating ball position based on the forces applied 
 matrix4 Ball::Update(matrix4 planeRotation)
 {
+	//Forces Physics 
 	vector4 grav(glm::normalize(-REAXISY)*material.gravity, 1);
 	grav = planeRotation*grav;
 	velocity += vector3(grav.x*.01f, 0, grav.z*.01f);
 	velocity -= velocity*material.drag;
 	quaternion start = quaternion(vector3(0.f, 0.f, 0.f));
 	quaternion end = quaternion(vector3(glm::dot(REAXISZ,velocity), 0.f, glm::dot(-REAXISX, velocity)));
-	quaternion roll = glm::mix(start, end, (float)(velocity.length()));
+	quaternion roll = glm::mix(start, end, (float)(velocity.length())); // rolling effect
 
 	if (glm::length(velocity) > .1f)
 	{
@@ -36,6 +38,7 @@ matrix4 Ball::Update(matrix4 planeRotation)
 	return GetMatrix();
 }
 
+// helper functions
 matrix4 Ball::GetMatrix()
 {
 	return m4Translation * m4Rotation * m4Scale;

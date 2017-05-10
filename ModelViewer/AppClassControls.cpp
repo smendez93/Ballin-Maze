@@ -107,16 +107,6 @@ void AppClass::ProcessKeyboard(void)
 			bool bTest = m_pMeshMngr->IsInstanceCreated(m_sSelectedObject);
 			if (bTest)
 			{
-				//BoundingObjectClass* pBO = m_pMeshMngr->GetBoundingObject(m_sSelectedObject);
-				//vector3 v3Centroid = pBO->GetCentroidGlobal();
-				//vector3 v3HalfWidth = pBO->GetHalfWidth();
-				//float fSize = v3HalfWidth.x;
-				//if (fSize < v3HalfWidth.y)
-				//	fSize = v3HalfWidth.y;
-				//if (fSize < v3HalfWidth.z)
-				//	fSize = v3HalfWidth.z;
-				//m_pCameraMngr->SetPositionTargetAndView(v3Centroid + REAXISZ * fSize * 3.5f, v3Centroid, REAXISY);
-				//m_qArcBall = quaternion();
 			}
 
 			m_pSystem->SetThreaded(bThreaded);
