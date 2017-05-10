@@ -16,7 +16,7 @@ void AppClass::InitVariables(void)
 	m_pCameraMngr->SetPosition(vector3(0.f, 10.f, 10.f));
 	m_sSelectedObject = "";
 
-	ball = new Ball("Ball", vector2(-CORNER,CORNER), BallMat::rubber);
+	ball = new Ball("Ball", vector2(-CORNER, CORNER), BallMat::rubber);
 
 	m_iLevelCounter = 0;
 
@@ -38,8 +38,8 @@ void AppClass::InitVariables(void)
 
 	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
-	
-	
+
+
 
 	ROT = 0.03f;
 	MAX_TURN = 0.45f;
@@ -49,7 +49,7 @@ void AppClass::InitVariables(void)
 	//map reader
 	m_pMapReader = new MapReader(m_pMeshMngr->GetVertexList("Plane"));
 
-	walls = m_pMapReader->ParseFile("Map"+ std::to_string(m_iLevelCounter) +".txt");
+	walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
 
 	for (unsigned int i = 0; i < walls.size(); i++)
 	{
@@ -59,6 +59,7 @@ void AppClass::InitVariables(void)
 			m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 		}
 	}
+	m_numWallModels = walls.size();
 	m_pMaze = new QuadNode(walls, 4);
 }
 
@@ -114,7 +115,7 @@ void AppClass::Update(void)
 
 	matrix4 cubeSpot = glm::translate(vector3(CORNER, 0.f, -CORNER))*glm::scale(vector3(.8f,.2f,.8f));
 	m_pMeshMngr->AddCubeToRenderList(cubeSpot, REGREEN, SOLID);
-	if (ball->position.x > CORNER && ball->position.z < CORNER )
+	if (ball->position.x > 3.0f && ball->position.z < -3.0f)
 	{
 		if (m_iLevelCounter == 2)
 		{
@@ -123,21 +124,24 @@ void AppClass::Update(void)
 		else
 		{
 			m_iLevelCounter++;
+			walls.clear();
 			walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
 			for (unsigned int i = 0; i < walls.size(); i++)
 			{
 				if (walls[i]->type != Wall::none)
 				{
-					m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
+					if (i > m_numWallModels)
+					{
+						m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
+						m_numWallModels++;
+					}
 					m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 				}
 			}
 			m_pMaze = new QuadNode(walls, 4);
 			ResetBoard();
 		}
-		
 	}
-
 	m_pMeshMngr->Print("\n");
 	m_pMeshMngr->Print("Change Ball Type: ");
 	m_pMeshMngr->Print("(1)Rubber, ", REYELLOW);
