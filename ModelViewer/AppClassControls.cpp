@@ -28,29 +28,6 @@ void AppClass::ProcessKeyboard(void)
 		ResetBoard();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
-	{
-		if (!bModifier)
-			m_qOrientation = m_qOrientation * quaternion(vector3(glm::radians(1.0f), 0.0f, 0.0f));
-		else
-			m_qOrientation = m_qOrientation * quaternion(vector3(glm::radians(-1.0f), 0.0f, 0.0f));
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
-	{
-		if (!bModifier)
-			m_qOrientation = m_qOrientation * quaternion(vector3(0.0f, glm::radians(1.0f), 0.0f));
-		else
-			m_qOrientation = m_qOrientation * quaternion(vector3(0.0f, glm::radians(-1.0f), 0.0f));
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-	{
-		if (!bModifier)
-			m_qOrientation = m_qOrientation * quaternion(vector3(0.0f, 0.0f, glm::radians(1.0f)));
-		else
-			m_qOrientation = m_qOrientation * quaternion(vector3(0.0f, 0.0f, glm::radians(-1.0f)));
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		if (m_v3Rotation.x <= MAX_TURN)
@@ -81,45 +58,17 @@ void AppClass::ProcessKeyboard(void)
 	}
 	//Model States
 #pragma region Model States
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 0);
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 1);
+		ball->material = BallMat::rubber;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 2);
+		ball->material = BallMat::fuzzy;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
 	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 3);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 4);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num5))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 5);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num6))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 6);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num7))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 7);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num8))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 8);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num9))
-	{
-		m_pMeshMngr->m_pModelMngr->SetNextState(m_sSelectedObject, 9);
+		ball->material = BallMat::lead;
 	}
 #pragma endregion
 
@@ -187,80 +136,8 @@ void AppClass::ProcessKeyboard(void)
 		m_sSelectedObject = "";
 	}
 #pragma endregion
-
-#pragma region Camera Positioning
-	if (bModifier)
-		fSpeed *= 10.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		m_pCameraMngr->MoveForward(fSpeed);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		m_pCameraMngr->MoveForward(-fSpeed);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		m_pCameraMngr->MoveSideways(-fSpeed);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		m_pCameraMngr->MoveSideways(fSpeed);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-		m_pCameraMngr->MoveVertical(-fSpeed);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-		m_pCameraMngr->MoveVertical(fSpeed);
-#pragma endregion
-
-#pragma region Other Actions
-	ON_KEY_PRESS_RELEASE(Escape, NULL, PostMessage(m_pWindow->GetHandler(), WM_QUIT, NULL, NULL));
-	ON_KEY_PRESS_RELEASE(F1, NULL, m_pCameraMngr->SetCameraMode(CAMPERSP));
-	ON_KEY_PRESS_RELEASE(F2, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOZ));
-	ON_KEY_PRESS_RELEASE(F3, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOY));
-	ON_KEY_PRESS_RELEASE(F4, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOX));
-	if (bModifier)
-		ON_KEY_PRESS_RELEASE(F, NULL, m_pCameraMngr->SetFPS(false))
-	else
-		ON_KEY_PRESS_RELEASE(F, NULL, m_pCameraMngr->SetFPS(true))
-#pragma endregion
 }
 void AppClass::ProcessMouse(void)
 {
-	m_bArcBall = false;
-	m_bFPC = false;
-#pragma region ON_MOUSE_PRESS_RELEASE
-	static bool	bLastLeft = false, bLastMiddle = false, bLastRight = false;
-#define ON_MOUSE_PRESS_RELEASE(key, pressed_action, released_action){  \
-			bool pressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::key);			\
-			if(pressed){											\
-				if(!bLast##key) pressed_action;}/*Just pressed? */\
-			else if(bLast##key) released_action;/*Just released?*/\
-			bLast##key = pressed; } //remember the state
-#pragma endregion
-	bool bLeft = false;
-	ON_MOUSE_PRESS_RELEASE(Left, NULL, bLeft = true)
-		if (bLeft)
-		{
-			//Turn off the visibility of all BOs for all instances
-			m_pMeshMngr->SetVisibleBO(BD_NONE, "ALL", -1);
-			//Get the Position and direction of the click on the screen
-			std::pair<vector3, vector3> pair =
-				m_pCameraMngr->GetClickAndDirectionOnWorldSpace(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
-			float fDistance = 0;//Stores the distance to the first colliding object
-			m_selection = m_pMeshMngr->IsColliding(pair.first, pair.second, fDistance);
 
-			//If there is a collision
-			if (m_selection.first >= 0)
-			{
-				//Turn on the BO of the group
-				m_pMeshMngr->SetVisibleBO(BD_OB, m_selection.first, m_selection.second);
-
-				//Turn of the BO of the instance but not the group
-				m_pMeshMngr->SetVisibleBO(BD_NONE, m_selection.first, -2);
-			}
-		}
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Middle))
-		m_bArcBall = true;
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right))
-		m_bFPC = true;
 }

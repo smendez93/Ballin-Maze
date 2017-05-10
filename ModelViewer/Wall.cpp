@@ -1,6 +1,7 @@
 #include "Wall.h"
 
-
+#define LONG_SIDE 0.6f
+#define SHORT_SIDE 0.2f
 
 Wall::Wall()
 {
@@ -28,18 +29,19 @@ Wall::Wall(vector2 pos, int t, int ind)
 		position.x += SIZE / 2.f;
 		position.y += 0.4f;
 		position.z += SIZE;
+		m_v3Bounds = vector3(LONG_SIDE, 0.f, SHORT_SIDE);
 		break;
 	case right:
 		position.x += SIZE;
 		position.y += 0.4f;
 		position.z += SIZE / 2.f;
+		m_v3Bounds = vector3(SHORT_SIDE, 0.f, LONG_SIDE);
 		break;
 	case none:		
 		break;
 	}
 
 	m4Transform = glm::translate(position) * m4Rotation * m4Scale;
-	m_v3Bounds = vector3(vector4(1.f,1.f,1.f,0.f)*m4Rotation*m4Scale);
 }	
 
 Wall::~Wall()
@@ -53,6 +55,6 @@ vector3 Wall::GetCenterGlobal()
 
 vector3 Wall::GetHalfWidth()
 {
-	return m_v3Bounds / 2.f;
+	return m_v3Bounds;
 }
 

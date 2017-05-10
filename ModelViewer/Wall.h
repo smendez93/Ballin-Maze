@@ -19,7 +19,7 @@ public:
 	matrix4 m4Transform;
 	std::string name;
 
-	const vector3 scale = vector3(1.f, 1.f, 0.2f);
+	const vector3 scale = vector3(1.f, 1.f, 0.25f);
 	const float SIZE = 0.8f;
 
 

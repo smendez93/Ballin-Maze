@@ -1,4 +1,7 @@
 #include "AppClass.h"
+
+#define CORNER 3.6f
+
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Model Viewer"); // Window Name
@@ -13,7 +16,7 @@ void AppClass::InitVariables(void)
 	m_pCameraMngr->SetPosition(vector3(0.f, 10.f, 10.f));
 	m_sSelectedObject = "";
 
-	ball = new Ball("Ball", vector2(0.f), BallMat::normal);
+	ball = new Ball("Ball", vector2(-CORNER,CORNER), BallMat::fuzzy);
 
 	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name);
 	m_pMeshMngr->LoadModel("Ballin\\plane_textured.obj", "Plane");
@@ -26,6 +29,8 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Plane");
 	
+	
+
 	ROT = 0.03f;
 	MAX_TURN = 0.45f;
 	RECOIL = .2f;
@@ -36,7 +41,7 @@ void AppClass::InitVariables(void)
 
 	walls = m_pMapReader->ParseFile("Map.txt");
 
-	for (int i = 0; i < walls.size(); i++)
+	for (unsigned int i = 0; i < walls.size(); i++)
 	{
 		if (walls[i]->type != Wall::none)
 		{
@@ -58,8 +63,6 @@ void AppClass::Update(void)
 	//First person camera movement
 	if (m_bFPC)
 		CameraRotation();
-
-	ArcBall();
 
 	//if (m_sSelectedObject != "")
 	//{
@@ -99,6 +102,18 @@ void AppClass::Update(void)
 	
 	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 
+	matrix4 cubeSpot = glm::translate(vector3(CORNER, 0.f, -CORNER))*glm::scale(vector3(.8f,.2f,.8f));
+	m_pMeshMngr->AddCubeToRenderList(cubeSpot, REGREEN, SOLID);
+
+	m_pMeshMngr->Print("\n");
+	m_pMeshMngr->Print("Change Ball Type: ");
+	m_pMeshMngr->Print("(1)Rubber, ", REYELLOW);
+	m_pMeshMngr->Print("(2)Fuzzy, ", REYELLOW);
+	m_pMeshMngr->Print("(3)Lead\n", REYELLOW);
+	m_pMeshMngr->Print("Reset: ");
+	m_pMeshMngr->Print("(R)\n", REYELLOW);
+	m_pMeshMngr->Print("Tilt: ");
+	m_pMeshMngr->Print("Arrow Keys\n", REYELLOW);
 
 	////Print info on the screen
 	//m_pMeshMngr->PrintLine("");//Add a line on top
@@ -146,8 +161,9 @@ void AppClass::ResetBoard()
 	m_v3Rotation = vector3(0.f);
 	m_m4Rotation = IDENTITY_M4;
 	std::string ballName = ball->name;
+	BallMaterial ballMat = ball->material;
 	delete ball;
-	ball = new Ball(ballName, vector2(0.f), BallMat::normal);
+	ball = new Ball(ballName, vector2(-CORNER, CORNER), ballMat);
 
 }
 //

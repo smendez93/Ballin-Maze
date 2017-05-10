@@ -198,14 +198,13 @@ bool QuadNode::IsColliding(Ball * ball, Wall * wall, vector3 & normal)
 		if (onEdge)
 		{
 			rePosition = (distance*ball->GetRadius() / glm::length(distance))-distance;
-			normal = (distance / glm::length(distance));
+			normal = distance;
 		}
 		else {
 			rePosition = -(distance*ball->GetRadius() / glm::length(distance)) - distance;
-			normal = -(distance / glm::length(distance));
+			normal = -distance;
 		}
 		rePosition.y = 0;
-		normal.y = 0;
 		ball->position += rePosition;
 		ball->m4Translation = glm::translate(ball->position);
 		return true;

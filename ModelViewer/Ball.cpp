@@ -1,7 +1,7 @@
 #include "Ball.h"
 
 
-Ball::Ball(std::string name, vector2 position, BallMaterial material = BallMat::normal)
+Ball::Ball(std::string name, vector2 position, BallMaterial material)
 {
 	this->name = name;
 	this->position = vector3(position.x,.2f,position.y);
@@ -22,6 +22,11 @@ matrix4 Ball::Update(matrix4 planeRotation)
 	quaternion start = quaternion(vector3(0.f, 0.f, 0.f));
 	quaternion end = quaternion(vector3(glm::dot(REAXISZ,velocity), 0.f, glm::dot(-REAXISX, velocity)));
 	quaternion roll = glm::mix(start, end, (float)(velocity.length()));
+
+	if (glm::length(velocity) > .1f)
+	{
+		velocity = velocity*.1f / glm::length(velocity);
+	}
 
 	position += velocity;
 	m4Translation = IDENTITY_M4 * glm::translate(position);
