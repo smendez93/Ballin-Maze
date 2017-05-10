@@ -16,11 +16,19 @@ void AppClass::InitVariables(void)
 	m_pCameraMngr->SetPosition(vector3(0.f, 10.f, 10.f));
 	m_sSelectedObject = "";
 
-	ball = new Ball("Ball", vector2(-CORNER,CORNER), BallMat::fuzzy);
+	ball = new Ball("Ball", vector2(-CORNER,CORNER), BallMat::rubber);
 
-	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name);
+	m_pMeshMngr->LoadModel("Ballin\\ball_textured.obj", ball->name + "1");
+	m_pMeshMngr->LoadModel("Ballin\\FuzzyBall.obj", ball->name + "2");
+	m_pMeshMngr->LoadModel("Ballin\\LeadBall.obj", ball->name + "3");
+
+	ball->name = "Ball1";
+
+	m_pMeshMngr->SetModelMatrix(DEAD, "Ball1");
+	m_pMeshMngr->SetModelMatrix(DEAD, "Ball2");
+	m_pMeshMngr->SetModelMatrix(DEAD, "Ball3");
+
 	m_pMeshMngr->LoadModel("Ballin\\plane_textured.obj", "Plane");
-
 	m_selection = std::pair<int, int>(-1, -1);
 
 	m_v3Rotation = vector3(0.f);

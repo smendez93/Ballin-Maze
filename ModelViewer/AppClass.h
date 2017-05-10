@@ -15,6 +15,9 @@ Date: 2015/09
 #include "Ball.h"
 //#include <chrono>
 
+#define DEAD glm::scale(vector3(.01f))*glm::translate(vector3(0.f,-.5f,0.f))
+
+
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass

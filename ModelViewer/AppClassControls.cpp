@@ -61,14 +61,26 @@ void AppClass::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 	{
 		ball->material = BallMat::rubber;
+		ball->name = "Ball1";
+		m_pMeshMngr->SetModelMatrix(DEAD, "Ball2");
+		m_pMeshMngr->SetModelMatrix(DEAD, "Ball3");
+		m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 	{
 		ball->material = BallMat::fuzzy;
+		ball->name = "Ball2";
+		m_pMeshMngr->SetModelMatrix(DEAD, "Ball1");
+		m_pMeshMngr->SetModelMatrix(DEAD, "Ball3");
+		m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
 	{
 		ball->material = BallMat::lead;
+		ball->name = "Ball3";
+		m_pMeshMngr->SetModelMatrix(DEAD, "Ball1");
+		m_pMeshMngr->SetModelMatrix(DEAD, "Ball2");
+		m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 	}
 #pragma endregion
 
