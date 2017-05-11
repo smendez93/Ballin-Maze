@@ -1,5 +1,5 @@
 ﻿  AppClass.cpp
-z:\igmprofile\desktop\bmrepo\modelviewer\appclass.cpp(140): warning C4018: '>': signed/unsigned mismatch
+z:\igmprofile\desktop\bmrepo\modelviewer\appclass.cpp(141): warning C4018: '>': signed/unsigned mismatch
   ModelViewer.vcxproj -> Z:\IGMProfile\Desktop\BMRepo\Z_DELETE\ModelViewerD.exe
   ModelViewer.vcxproj -> Z:\IGMProfile\Desktop\BMRepo\Z_DELETE\ModelViewerD.pdb (Full PDB)
   A subdirectory or file Z:\IGMProfile\Desktop\BMRepo\_Binary\ already exists.

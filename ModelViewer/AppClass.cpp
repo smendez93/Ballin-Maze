@@ -126,6 +126,7 @@ void AppClass::Update(void)
 		if (m_iLevelCounter == NUM_LEVELS -1)
 		{
 			m_iLevelCounter = 0;
+			dTotalTime = 0.0;// reset timer
 		}
 		else
 		{
@@ -146,8 +147,7 @@ void AppClass::Update(void)
 			}
 		}
 		m_pMaze = new QuadNode(walls, QUAD_DEPTH);
-		ResetBoard();	// reset board at the end of the mazes
-		dTotalTime = 0.0;// reset timer
+		ResetBoard();	// reset board at the end of the mazes	
 	}
 	
 	// UI Elements
