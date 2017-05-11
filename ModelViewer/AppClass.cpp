@@ -108,7 +108,12 @@ void AppClass::Update(void)
 		ball->velocity += rejection*ball->material.bounce; // rebound based on bounce factor;
 
 	}
-	
+
+	//toggle for quadtree
+	if (render) {
+		m_pMaze->Render();
+	}
+
 	m_pMeshMngr->SetModelMatrix(ball->GetMatrix(), ball->name);
 
 	//Defining the goal
@@ -144,20 +149,24 @@ void AppClass::Update(void)
 		ResetBoard();	// reset board at the end of the mazes
 		dTotalTime = 0.0;// reset timer
 	}
-
+	
 	// UI Elements
+	//Controls and Toggles
 	m_pMeshMngr->Print("\n");
 	m_pMeshMngr->Print("Change Ball Type: ");
 	m_pMeshMngr->Print("(1)Rubber, ", REYELLOW);
 	m_pMeshMngr->Print("(2)Fuzzy, ", REYELLOW);
 	m_pMeshMngr->Print("(3)Lead\n", REYELLOW);
 	m_pMeshMngr->Print("Reset: ");
-	m_pMeshMngr->Print("(R)\n", REYELLOW);
+	m_pMeshMngr->Print("(R)\n", REYELLOW); 
 	m_pMeshMngr->Print("Tilt: ");
-	m_pMeshMngr->Print("Arrow Keys\n", REYELLOW);
+	m_pMeshMngr->Print("Arrow Keys", REYELLOW);
+	m_pMeshMngr->Print("\nToggle Quadtee: ");
+	m_pMeshMngr->Print("(Q)\n", REYELLOW);
+
+	//Timer
 	m_pMeshMngr->Print("Time: ");
 	m_pMeshMngr->PrintLine(std::to_string(dTotalTime), RERED);// print timer
-
 }
 
 void AppClass::Display(void)

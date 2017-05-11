@@ -24,6 +24,8 @@ class AppClass : public ReEngAppClass
 {
 	quaternion m_qOrientation;
 	String m_sSelectedObject = "";
+
+	bool render = true; // render quadtree wireframe
 	
 public:
 	typedef ReEngAppClass super;

@@ -16,7 +16,7 @@ Ball::Ball(std::string name, vector2 position, BallMaterial material)
 //Updating ball position based on the forces applied 
 matrix4 Ball::Update(matrix4 planeRotation)
 {
-	//Forces Physics 
+	//Forces and Physics 
 	vector4 grav(glm::normalize(-REAXISY)*material.gravity, 1);
 	grav = planeRotation*grav;
 	velocity += vector3(grav.x*.01f, 0, grav.z*.01f);

@@ -22,12 +22,22 @@ void AppClass::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 		bModifier = true;
 #pragma endregion
-
+	static bool qPressed = false;//toggle
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
 		ResetBoard();
 	}
-
+	
+	//toggle key
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	{
+		if (!qPressed) {
+			qPressed = true;
+			render = !render;
+		}
+	}
+	else { qPressed = false; }
+	// Arrow key controls
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		if (m_v3Rotation.x <= MAX_TURN)
