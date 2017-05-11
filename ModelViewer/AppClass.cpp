@@ -67,6 +67,11 @@ void AppClass::Update(void)
 	//Update the system's time
 	m_pSystem->UpdateTime();
 
+	//Adding the timer
+	static double dTotalTime = 0.0; //Total time of the simulation
+	double dDeltaTime = m_pSystem->LapClock(); //time difference between function calls
+	dTotalTime += dDeltaTime; //Incrementing the time differences
+
 	//Update the mesh manager's time
 	m_pMeshMngr->Update();
 
@@ -136,7 +141,8 @@ void AppClass::Update(void)
 			}
 		}
 		m_pMaze = new QuadNode(walls, 4);
-		ResetBoard();
+		ResetBoard();	// reset board at the end of the mazes
+		dTotalTime = 0.0;// reset timer
 	}
 
 	// UI Elements
@@ -149,6 +155,8 @@ void AppClass::Update(void)
 	m_pMeshMngr->Print("(R)\n", REYELLOW);
 	m_pMeshMngr->Print("Tilt: ");
 	m_pMeshMngr->Print("Arrow Keys\n", REYELLOW);
+	m_pMeshMngr->Print("Time: ");
+	m_pMeshMngr->PrintLine(std::to_string(dTotalTime), RERED);// print timer
 
 }
 
