@@ -163,6 +163,8 @@ void AppClass::Update(void)
 	m_pMeshMngr->Print("Arrow Keys", REYELLOW);
 	m_pMeshMngr->Print("\nToggle Quadtee: ");
 	m_pMeshMngr->Print("(Q)\n", REYELLOW);
+	m_pMeshMngr->Print("Map ");
+	m_pMeshMngr->PrintLine(std::to_string(m_iLevelCounter+1), RERED);//Print the map 
 
 	//Timer
 	m_pMeshMngr->Print("Time: ");

@@ -37,6 +37,7 @@ void AppClass::ProcessKeyboard(void)
 		}
 	}
 	else { qPressed = false; }
+
 	// Arrow key controls
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{

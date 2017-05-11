@@ -1,0 +1,37 @@
+﻿  AppClass.cpp
+z:\igmprofile\desktop\bmrepo\modelviewer\appclass.cpp(140): warning C4018: '>': signed/unsigned mismatch
+  ModelViewer.vcxproj -> Z:\IGMProfile\Desktop\BMRepo\Z_DELETE\ModelViewerD.exe
+  ModelViewer.vcxproj -> Z:\IGMProfile\Desktop\BMRepo\Z_DELETE\ModelViewerD.pdb (Full PDB)
+  A subdirectory or file Z:\IGMProfile\Desktop\BMRepo\_Binary\ already exists.
+  Z:\IGMProfile\Desktop\BMRepo\include\GL\bin\glew32.dll
+  Z:\IGMProfile\Desktop\BMRepo\include\GL\bin\glut32.dll
+  2 File(s) copied
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\bin\2015\ReEng_VS15.dll
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\bin\2015\ReEng_VS15_d.dll
+  2 File(s) copied
+  Z:\IGMProfile\Desktop\BMRepo\include\SFML\bin\sfml-system-2.dll
+  1 File(s) copied
+  Z:\IGMProfile\Desktop\BMRepo\include\SFML\bin\sfml-window-2.dll
+  1 File(s) copied
+  A subdirectory or file Z:\IGMProfile\Desktop\BMRepo\_Binary\Shaders\ already exists.
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Basic.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Basic.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\BasicColor.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\BasicColor.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Color.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Color.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\PassThrough.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\PassThrough.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Phong.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Phong.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\REShader.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\REShader.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\REShaderInv.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\REShaderMC.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Skybox.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Skybox.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Test.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\Test.vs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\TextShader.fs
+  Z:\IGMProfile\Desktop\BMRepo\include\RE\Shaders\TextShader.vs
+  20 File(s) copied
