@@ -1,7 +1,7 @@
 #include "AppClass.h"
 
 #define CORNER 3.6f
-#define NUM_LEVELS 3
+#define NUM_LEVELS 4
 #define QUAD_DEPTH 2
 void AppClass::InitWindow(String a_sWindowName)
 {
@@ -131,6 +131,9 @@ void AppClass::Update(void)
 		{
 			m_iLevelCounter++;
 		}
+		for (unsigned int i = 0; i < walls.size(); i++) {
+			m_pMeshMngr->SetModelMatrix(DEAD, walls[i]->name);
+		}
 		walls.clear();
 		walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
 		for (unsigned int i = 0; i < walls.size(); i++)
@@ -145,6 +148,7 @@ void AppClass::Update(void)
 				m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 			}
 		}
+
 		m_pMaze = new QuadNode(walls, QUAD_DEPTH);
 		ResetBoard();	// reset board at the end of the mazes
 		dTotalTime = 0.0;// reset timer
