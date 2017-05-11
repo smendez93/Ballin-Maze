@@ -2,7 +2,7 @@
 
 #define CORNER 3.6f
 #define NUM_LEVELS 3
-
+#define QUAD_DEPTH 2
 void AppClass::InitWindow(String a_sWindowName)
 {
 	super::InitWindow("Model Viewer"); // Window Name
@@ -59,7 +59,7 @@ void AppClass::InitVariables(void)
 		}
 	}
 	m_numWallModels = walls.size();
-	m_pMaze = new QuadNode(walls, 4);
+	m_pMaze = new QuadNode(walls, QUAD_DEPTH);
 }
 
 void AppClass::Update(void)
@@ -145,7 +145,7 @@ void AppClass::Update(void)
 				m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 			}
 		}
-		m_pMaze = new QuadNode(walls, 4);
+		m_pMaze = new QuadNode(walls, QUAD_DEPTH);
 		ResetBoard();	// reset board at the end of the mazes
 		dTotalTime = 0.0;// reset timer
 	}
