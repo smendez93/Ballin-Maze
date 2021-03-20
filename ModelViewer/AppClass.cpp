@@ -56,9 +56,10 @@ void AppClass::InitVariables(void)
 		{
 			m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
 			m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
+			m_numWallModels++;
+			m_usedWallModels++;
 		}
 	}
-	m_numWallModels = walls.size();
 	m_pMaze = new QuadNode(walls, QUAD_DEPTH);
 }
 
@@ -123,24 +124,21 @@ void AppClass::Update(void)
 	//Level progression
 	if (ball->position.x > 3.0f && ball->position.z < -3.0f)
 	{
-		if (m_iLevelCounter == NUM_LEVELS -1)
-		{
-			m_iLevelCounter = 0;
-		}
-		else
-		{
-			m_iLevelCounter++;
-		}
-		for (unsigned int i = 0; i < walls.size(); i++) {
+		m_iLevelCounter += 1;
+		m_iLevelCounter %= NUM_LEVELS + 1;
+
+		for (unsigned int i = 0; i < m_usedWallModels; i++) {
 			m_pMeshMngr->SetModelMatrix(DEAD, walls[i]->name);
 		}
 		walls.clear();
+		m_usedWallModels = 0;
 		walls = m_pMapReader->ParseFile("Map" + std::to_string(m_iLevelCounter) + ".txt");
 		for (unsigned int i = 0; i < walls.size(); i++)
 		{
 			if (walls[i]->type != Wall::none)
 			{
-				if (i > m_numWallModels)
+				m_usedWallModels++;
+				if (m_usedWallModels > m_numWallModels)
 				{
 					m_pMeshMngr->LoadModel("Ballin\\wall_textured.obj", walls[i]->name);
 					m_numWallModels++;
@@ -148,6 +146,7 @@ void AppClass::Update(void)
 				m_pMeshMngr->SetModelMatrix(walls[i]->m4Transform, walls[i]->name);
 			}
 		}
+
 
 		m_pMaze = new QuadNode(walls, QUAD_DEPTH);
 		ResetBoard();	// reset board at the end of the mazes
