@@ -41,6 +41,7 @@ public:
 	int m_iLevelCounter;
 
 	int m_numWallModels;
+	int m_usedWallModels;
 
 	vector3 m_v3Rotation;
 	matrix4 m_m4Rotation;
